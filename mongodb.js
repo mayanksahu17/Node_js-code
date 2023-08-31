@@ -1,19 +1,35 @@
-const dbconnect = require("./mongodb");
 
 
-dbconnect().then((resp)=>{
-      resp.find().toArray().then((data)=>{
-            console.warn(data);
-      })
-})
+// import {mongoclient } from 'mongodb
+const { MongoClient } = require("mongodb");
 
-// async function  main(){
-//       let data = await dbconnect();
-//     data= await  data.find().toArray();
-//       console.warn(data);
-// }
- 
-// main();
+// Connection URL
+const url = 'mongodb://127.0.0.1:27017';
+const database = 'e-comm';
+
+// Create a new MongoClient
+const client = new MongoClient(url);
+
+async function dbconnect() {
+  
+        // Use connect method to connect to the server
+        await client.connect();
+        console.log("Connected to MongoDB");
+
+        const db = client.db(database);
+       return db.collection('products');
+      //   const response = await collection.find({name:"iPhone 13"}).toArray();
+      //   console.log(response);
+    
+}
+
+// getdata();
+
+
+module.exports = dbconnect;
+
+
+
 
 
 
